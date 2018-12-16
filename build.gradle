@@ -1,0 +1,39 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.1.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+plugins {
+    id 'com.google.cloud.tools.jib' version '0.9.7'
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.github.dviejopomata'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation('org.springframework.boot:spring-boot-starter')
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+}
+
+jib {
+    container {
+        jvmFlags = ["-Xms1024M", "-Xmx2048M"]
+    }
+}
